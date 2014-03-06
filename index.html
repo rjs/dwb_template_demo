@@ -1,20 +1,54 @@
 <html>
-<style>
-  body { font-size: 14px; font-family: helvetica, arial, sans-serif;}
-  div.gist { font-size: 12px;}
+<style type="text/css">
+  body { font-size: 16px; line-height: 1.3; font-family: helvetica, arial, sans-serif;}
+  /* Better styles for embedding GitHub Gists */ .line-data { font-size:12px; font-family: Consolas,"Liberation Mono",Courier,monospace; } .line-numbers { font-size:12px; background-color: #ECECEC; border-right: 1px solid #DDDDDD; color: #AAAAAA; padding: 0.0em; text-align: right; } .line-pre { font-size:12px;font-family: Consolas,"Liberation Mono",Courier,monospace; }
+  img.screenshot { max-width: 100%; }
   
 </style>
 <body>
 
-<div style="width: 600px; margin: 0 auto;">
-<h1>Template</h1>
-<script src="https://gist.github.com/rjs/9383137.js"></script>
-<h2>Sub page template</h2>
-<script src="https://gist.github.com/rjs/9383167.js"></script>
-<h2>HRC home page</h2>
-<script src="https://gist.github.com/rjs/9383184.js"></script>
-<h2>HRC contact page (a sub page)</h2>
-<script src="https://gist.github.com/rjs/9383192.js"></script>
+<div style="width: 700px; margin: 0 auto;">
+  <h1>Simple template with Firewheel events</h1>
+  <p>Hi friends,</p>
+
+  <p>Here is how one simple template can generate multiple websites with very little code and no CMS backend. I'll use the example of retreat center websites in the US to illustrate.</p>
+  <h2>Example: US retreat centers</h2>
+  <p>Here are three retreat center websites. Each site displays upcoming events via Firewheel. They appear under "Upcoming events" and "Events in the region" in the middle column.</p>
+  <img class="screenshot" src="hrc.png" />
+  <img class="screenshot" src="dakini_ranch.png" />
+  <img class="screenshot" src="wrc.png" />
+  <p>Each website has its own directory. It can include whatever pages and assets it needs. The template doesn't have an opinion about that.</p>
+  <script src="https://gist.github.com/rjs/9398631.js"></script>
+  <p><code>index.php</code> provies a few variables and calls to the home page template to render at the bottom:</p>
+  <script src="https://gist.github.com/rjs/9383184.js"></script>
+  <p>The home page template lives in <code>/var/www/html/template/retreat_center/</code>. Notice how it expects a few variables, including an ID for looking up Firewheel events.</p>
+  <script src="https://gist.github.com/rjs/9383137.js"></script>
+  <p>Sub pages (aka child pages) are handled in the same way. There are is no rule specifying which sub pages are allowed. Each page that wants to use the template provides some variables and calls to the template to render.</p>
+  <p>For example, the HRC needs to provide information about ticks. There is a <code>ticks.php</code> file in the <code>hrc</code> directory. It calls to the subpage template to render itself:</p>
+
+  <script src="https://gist.github.com/rjs/9383192.js"></script>
+
+  <p>Here is the general sub page template that lives in <code>/var/www/html/template/retreat_center/subpage.php</code>:</p>
+
+  <script src="https://gist.github.com/rjs/9383167.js"></script>
+
+  <p>The result looks like this:</p>
+
+  <img class="screenshot" src="hrc-ticks.png" />
+
+  <p>Similarly, pages for directions, bank information, etc are easily generated:</p>
+
+  <img class="screenshot" src="hrc-directions.png" />
+
+  <p>We use a similar approach for center websites in the US. In this case, we built a bit more machinery to pull center data from JSON files and populate the templates. But the principle and benefits are the same. The core idea is to keep a loose connection between the template and the websites and rely on outside services for database-backed CMS functions.</p>
+
+  <img class="screenshot" src="chicago.png" />
+  <img class="screenshot" src="chicago-events.png" />
+
+  <p>Hope this illustrates the approach I have been talking about. Please get in touch if you have more questions.</p>
+
+  <p>&mdash; Ryan</p>
+
 </div>
 </body>
 </html>
